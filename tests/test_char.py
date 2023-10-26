@@ -1,7 +1,10 @@
 from src.char import Char
 import pytest
-
-
+from src.dnd_Class import dnd_Class
+# (self, hp, crit_chance, crit_mult, is_mage, is_theif)
+fighter = dnd_Class(8, 1, 18, 2, False, False)
+mage = dnd_Class(3, 2, 20, 2, True, False)
+theif = dnd_Class(5, 2, 20, 3, False, True)
 
 def test_make_name():
     charactor = Char("jett", "lga", [10, 10, 10, 10, 10, 10])
@@ -86,3 +89,41 @@ def test_extra_dmg():
     charactor.testLvl()
     charactor.calcDamage(8, charactor2, charactor.str.mod, charactor.str.mod, 1)
     assert charactor2.hp == 4
+
+def test_death(): 
+
+    charactor = Char("jett", "lga", [10, 10, 10, 10, 10, 10], theif)
+    charactor2 = Char("will", "Lg", [10, 10, 10, 10, 10, 10])
+    # charactor.xp = 4000
+    # charactor.testLvl()
+    charactor.calcDamage(20, charactor2, charactor.str.mod, charactor.str.mod, 5)
+    charactor2.calcDamage(20, charactor, charactor2.str.mod, charactor2.str.mod, 5)
+    assert charactor.hp == 5
+
+def test_Fighter_hp(): 
+    charactor = Char("Will", "CG", [10,10,10,10,10,10], fighter)
+    assert charactor.hp == 8
+
+def test_FIghter_to_hit():
+    charactor = Char("Will", "CG", [10,10,10,10,10,10], fighter)
+    charactor2 = Char("Will", "CG", [10,10,10,10,10,10], mage)
+    charactor.calcDamage(9, charactor2, 3)
+    assert charactor2.is_alive == False
+
+def test_mage_Attack():
+    charactor = Char("Will", "CG", [10,10,10,12,12,14], mage)
+    charactor2 = Char("Jett", "CG", [10,10,10,10,10,10], mage)
+    charactor.calcDamage(9, charactor2, 1)
+    assert charactor2.is_alive == False
+
+def test_theif_Attack():
+    charactor = Char("Will", "CG", [10,14,10,10,10,10], theif)
+    charactor2 = Char("Jett", "CG", [10,10,10,10,10,10], mage)
+    charactor.calcDamage(9, charactor2, 1)
+    assert charactor2.is_alive == False
+
+def test_theif_crit():
+    charactor = Char("Will", "CG", [10,10,10,10,10,10], theif)
+    charactor2 = Char("Jett", "CG", [10,10,10,10,10,10], mage)
+    charactor.calcDamage(20, charactor2, 1)
+    assert charactor2.hp == 0
