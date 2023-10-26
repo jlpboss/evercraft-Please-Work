@@ -6,6 +6,13 @@ fighter = dnd_Class(8, 1, 18, 2, False, False)
 mage = dnd_Class(3, 2, 20, 2, True, False)
 theif = dnd_Class(5, 2, 20, 3, False, True)
 
+human = [1, 1, 1, 1, 1, 1]
+elf = [0, 2, 0, 0, 1, 0]
+dwarf = [1, 0, 2, 0, 0, 0]
+gnome = [0, 0, 0, 2, 1, 0]
+half_Orc = [2, 0, 1, 0, 0, 0]
+half_elf = [0, 1, 1, 0, 0, 2]
+
 def test_make_name():
     charactor = Char("jett", "lga", [10, 10, 10, 10, 10, 10])
     assert charactor.name is not None
@@ -127,3 +134,9 @@ def test_theif_crit():
     charactor2 = Char("Jett", "CG", [10,10,10,10,10,10], mage)
     charactor.calcDamage(20, charactor2, 1)
     assert charactor2.hp == 0
+
+def test_race():
+    charactor = Char("Will", "CG", [11,10,10,10,10,10], fighter, human)
+    charactor2 = Char("jett", "CG", [10,10,10,10,10,10], mage, human)
+    charactor.calcDamage(8, charactor2, 3)
+    assert charactor2.is_alive == False

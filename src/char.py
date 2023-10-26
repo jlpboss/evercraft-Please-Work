@@ -2,15 +2,15 @@ from src.mods import mod
 
 class Char:
 
-    def __init__(self, name, alignment, mod_arr, dnd_Class):
+    def __init__(self, name, alignment, mod_arr, dnd_Class, dnd_race):
         self.name = name
         self.alignment = alignment
-        self.str = mod(mod_arr[0], 0)
-        self.dex = mod(mod_arr[1], 0)
-        self.con = mod(mod_arr[2], 0)
-        self.wis = mod(mod_arr[3], 0)
-        self.int = mod(mod_arr[4], 0)
-        self.riz = mod(mod_arr[5], 0)
+        self.str = mod(mod_arr[0], dnd_race[0])
+        self.dex = mod(mod_arr[1], dnd_race[1])
+        self.con = mod(mod_arr[2], dnd_race[2])
+        self.wis = mod(mod_arr[3], dnd_race[3])
+        self.int = mod(mod_arr[4], dnd_race[4])
+        self.riz = mod(mod_arr[5], dnd_race[5])
         self.dnd_Class = dnd_Class
         self.hp = self.dnd_Class.health + self.con.mod 
         self.ac = 10 + self.dex.mod
