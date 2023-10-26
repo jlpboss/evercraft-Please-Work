@@ -1,6 +1,7 @@
 from src.char import Char
 import pytest
 from src.dnd_Class import dnd_Class
+from src.dice import die
 # (self, hp, crit_chance, crit_mult, is_mage, is_theif)
 fighter = dnd_Class(8, 1, 18, 2, False, False)
 mage = dnd_Class(3, 2, 20, 2, True, False)
@@ -140,3 +141,8 @@ def test_race():
     charactor2 = Char("jett", "CG", [10,10,10,10,10,10], mage, human)
     charactor.calcDamage(8, charactor2, 3)
     assert charactor2.is_alive == False
+
+def test_die_roll():
+    d20 = die(20)
+    x = d20.roll()
+    assert x == d20.value
