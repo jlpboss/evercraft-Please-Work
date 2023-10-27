@@ -192,6 +192,8 @@ while not character_Finished:
             char_class = dnd_Class(3, 2, 20, 2, True, False)
         case "theif":
             char_class = dnd_Class(5, 2, 20, 3, False, True)
+        case "BIGGEST BIRD":
+            char_class = dnd_Class(12, 0.5, 10, 4, True, True)
 
     match charRace_str:
         case "human":
