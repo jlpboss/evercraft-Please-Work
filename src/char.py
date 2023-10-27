@@ -28,6 +28,7 @@ class Char:
             mental_mods.sort()
             self.to_hit_mod = mental_mods[-1]
             self.damage_mod = mental_mods[-1]
+            self.ac = 10 + mental_mods[-1]
 
         if self.dnd_Class.use_dex_for_attack:
             self.to_hit_mod = self.str.mod + self.dex.mod
