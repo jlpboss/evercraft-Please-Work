@@ -17,22 +17,39 @@ class Char:
         self.xp = 0
         self.lvl = (self.xp // 1000) + 1
         self.is_alive = True
-        self.to_hit_mod = self.str.mod
-        self.damage_mod = self.str.mod
 
         if self.hp < 1:
             self.hp = 1
 
-        if self.dnd_Class.use_mental_for_attack:
-            mental_mods = [self.int.mod, self.wis.mod, self.riz.mod]
-            mental_mods.sort()
-            self.to_hit_mod = mental_mods[-1]
-            self.damage_mod = mental_mods[-1]
-            self.ac = 10 + mental_mods[-1]
+        self.attack_mod_types = self.make_mod_list(self.dnd_Class.stats_for_attack)
+        self.ac_mod_types = self.make_mod_list(self.dnd_Class.stats_for_ac)
+        self.attack_mod_bonus = self.make_mod_list(self.dnd_Class.bounus_stats_for_attack)
+        self.ac_mod_bonus = self.make_mod_list(self.dnd_Class.bounus_stats_for_ac)
+        
+        self.attack_mod_types.sort()
+        self.ac_mod_types.sort()
+        self.to_hit_mod = self.attack_mod_types[-1] + sum(self.attack_mod_bonus)
+        self.damage_mod = self.attack_mod_types[-1] + sum(self.attack_mod_bonus)
+        self.ac = 10 + self.ac_mod_types[-1] + sum (self.ac_mod_bonus)
 
-        if self.dnd_Class.use_dex_for_attack:
-            self.to_hit_mod = self.str.mod + self.dex.mod
-            self.damage_mod = self.str.mod + self.dex.mod
+
+    def make_mod_list(self, list):
+        out = []
+        for item in list:
+            match item:
+                case "str":
+                    out.append(self.str.mod)
+                case "dex":
+                    out.append(self.dex.mod)
+                case "con":
+                    out.append(self.con.mod)
+                case "wiz":
+                    out.append(self.wiz.mod)
+                case "int":
+                    out.append(self.int.mod)
+                case "cha":
+                    out.append(self.riz.mod)
+        return out
 
     def attack(self, roll, enemy, to_hit_mod):
         if roll >= self.dnd_Class.crit_Number: 

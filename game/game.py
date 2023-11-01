@@ -110,6 +110,7 @@ def print_stats(player_Charactor, char_class_str, charRace_str):
 
     Hp: {}
     AC: {}
+    Alignment: {}
 
     Level: {}
     Xp: {}
@@ -121,7 +122,7 @@ def print_stats(player_Charactor, char_class_str, charRace_str):
     Int: {}
     Cha: {}
 
-    """.format(player_Charactor.name, char_class_str, charRace_str, player_Charactor.hp, player_Charactor.ac, player_Charactor.lvl, player_Charactor.xp, player_Charactor.str.score, player_Charactor.dex.score, player_Charactor.con.score, player_Charactor.wis.score, player_Charactor.int.score, player_Charactor.riz.score)
+    """.format(player_Charactor.name, char_class_str, charRace_str, player_Charactor.hp, player_Charactor.ac, player_Charactor.alignment, player_Charactor.lvl, player_Charactor.xp, player_Charactor.str.score, player_Charactor.dex.score, player_Charactor.con.score, player_Charactor.wis.score, player_Charactor.int.score, player_Charactor.riz.score)
     print(stats_out)
 
 def random_enemy():

@@ -2,11 +2,10 @@ from src.char import Char
 import pytest
 from src.dnd_Class import dnd_Class
 from src.dice import die
-# (self, hp, crit_chance, crit_mult, is_mage, is_theif)
-fighter = dnd_Class(8, 1, 18, 2, False, False)
-mage = dnd_Class(3, 2, 20, 2, True, False)
-theif = dnd_Class(5, 2, 20, 3, False, True)
-none = dnd_Class(5, 2, 20, 2, False, False)
+fighter = dnd_Class(8, 1, 18, 2, ["str"], ["dex"], [], [])
+mage = dnd_Class(3, 2, 20, 2, ["wis", "int", "cha"], ["wis", "int", "cha"], [], [])
+theif = dnd_Class(5, 2, 20, 3, ["str"], ["dex"], ["dex"], [])
+none = dnd_Class(5, 2, 20, 2, ["str"], ["dex"], [], [])
 
 noRace = [0, 0, 0, 0, 0, 0]
 human = [1, 1, 1, 1, 1, 1]
@@ -130,7 +129,7 @@ def test_theif_Attack():
     charactor = Char("Will", "CG", [10,14,10,10,10,10], theif, noRace)
     charactor2 = Char("Jett", "CG", [10,10,10,10,10,10], mage, noRace)
     charactor.calcDamage(9, charactor2, 1)
-    assert charactor2.is_alive == False
+    assert charactor2.hp <= 0
 
 def test_theif_crit():
     charactor = Char("Will", "CG", [10,10,10,10,10,10], theif, noRace)
@@ -148,3 +147,10 @@ def test_die_roll():
     d20 = die(20)
     x = d20.roll()
     assert x == d20.value
+
+def test_bonuse_dmg():
+    charactor = Char("Will", "CG", [10,14,10,10,10,10], theif, noRace)
+    charactor2 = Char("Jett", "CG", [10,10,10,10,10,10], mage, noRace)
+    charactor.calcDamage(9, charactor2, 1)
+    assert charactor.attack_mod_types[-1] + sum(charactor.attack_mod_bonus) == 2
+    
